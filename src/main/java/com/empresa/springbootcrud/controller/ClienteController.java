@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,13 +35,15 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ClienteDTO get(@PathVariable("id") Long id) {
+    public ResponseEntity<ClienteDTO> get(@PathVariable("id") Long id) {
 
-        Cliente resultado = clienteRepo.getOne(id);
+        Optional<Cliente> resultado = clienteRepo.findById(id);
 
-        ClienteDTO retorno = resultado.toClienteDTO();
+        if(resultado.isPresent()) {
+            return ResponseEntity.ok(resultado.get().toClienteDTO());
+        }
 
-        return retorno;
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -59,19 +62,29 @@ public class ClienteController {
     @Transactional
     public ResponseEntity<ClienteDTO> editar(@PathVariable("id") Long clienteId, @RequestBody ClienteUpdate update) {
 
-        Cliente resultado = clienteRepo.getOne(clienteId);
-        resultado.atualizar(update);
-        Cliente atualizado = clienteRepo.save(resultado);
+        Optional<Cliente> resultado = clienteRepo.findById(clienteId);
+        if(resultado.isPresent()) {
 
-        ClienteDTO retorno = atualizado.toClienteDTO();
 
-        return ResponseEntity.ok(retorno);
+            resultado.get().atualizar(update);
+            Cliente atualizado = clienteRepo.save(resultado.get());
+
+            ClienteDTO retorno = atualizado.toClienteDTO();
+
+            return ResponseEntity.ok(retorno);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity apagar(@PathVariable("id") Long clienteId) {
-        clienteRepo.deleteById(clienteId);
-        return ResponseEntity.ok().build();
+
+        Optional<Cliente> resultado = clienteRepo.findById(clienteId);
+        if(resultado.isPresent()) {
+            clienteRepo.deleteById(clienteId);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
