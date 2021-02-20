@@ -3,12 +3,14 @@ package com.empresa.springbootcrud.model;
 import com.empresa.springbootcrud.model.dto.ClienteDTO;
 import com.empresa.springbootcrud.model.form.ClienteForm;
 import com.empresa.springbootcrud.model.update.ClienteUpdate;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Audited
 public class Cliente {
 
     @Id

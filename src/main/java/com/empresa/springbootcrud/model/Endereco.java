@@ -1,12 +1,16 @@
 package com.empresa.springbootcrud.model;
 
-import com.empresa.springbootcrud.model.dto.ClienteDTO;
 import com.empresa.springbootcrud.model.dto.EnderecoDTO;
 import com.empresa.springbootcrud.model.form.EnderecoForm;
+import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
+@Audited
 public class Endereco {
 
     @Id

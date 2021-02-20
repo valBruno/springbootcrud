@@ -2,6 +2,7 @@ package com.empresa.springbootcrud.model;
 
 import com.empresa.springbootcrud.enums.TipoTelefoneEnum;
 import com.empresa.springbootcrud.model.dto.TelefoneDTO;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Audited
 public class Telefone {
 
     @Id
