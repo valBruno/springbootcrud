@@ -36,7 +36,8 @@ public class Cliente {
      * O CEP deve ser mostrado com máscara;
      * O CEP deve ser persistido sem máscara.
      */
-    private String endereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Endereco endereco;
 
     /*
      * Podem ser cadastrados múltiplos telefones;
@@ -81,11 +82,11 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
