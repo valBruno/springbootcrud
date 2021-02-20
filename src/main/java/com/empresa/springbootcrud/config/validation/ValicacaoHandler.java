@@ -1,4 +1,4 @@
-package com.empresa.springbootcrud.config;
+package com.empresa.springbootcrud.config.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

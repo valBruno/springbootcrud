@@ -1,4 +1,4 @@
-package com.empresa.springbootcrud.config;
+package com.empresa.springbootcrud.config.validation;
 
 public class ErroDTO {
 
