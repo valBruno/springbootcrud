@@ -94,4 +94,12 @@ public class Endereco {
                 ", uf='" + uf + '\'' +
                 '}';
     }
+
+    public void atualizar(EnderecoForm e) {
+        if(e.getCep()!=null) this.cep = e.getCep();
+        if(e.getLogradouro()!=null) this.logradouro = e.getLogradouro();
+        if(e.getBairro()!=null) this.bairro = e.getBairro();
+        if(e.getCidade()!=null) this.cidade = e.getCidade();
+        if(e.getUf()!=null) this.uf = e.getUf();
+    }
 }

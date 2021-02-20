@@ -5,6 +5,8 @@ import com.empresa.springbootcrud.model.Telefone;
 import com.empresa.springbootcrud.model.dto.ClienteDTO;
 import com.empresa.springbootcrud.model.form.ClienteForm;
 import com.empresa.springbootcrud.model.form.EnderecoForm;
+import com.empresa.springbootcrud.model.update.ClienteUpdate;
+import com.empresa.springbootcrud.model.update.EnderecoUpdate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -74,19 +76,19 @@ class ClienteControllerTest {
     @Test
     void editar() {
 
-        ClienteForm form = new ClienteForm();
-        form.setCpf("12345678900");
-        form.setNome("DADOOS ALTERADOS");
+        ClienteUpdate update = new ClienteUpdate();
+        update.setCpf("12345678900");
+        update.setNome("DADOOS ALTERADOS");
 
-        form.setEmail(Arrays.asList("email@mail.com", "email123@email.com"));
+        update.setEmail(Arrays.asList("email@mail.com", "email123@email.com"));
 
         Telefone tel1 = new Telefone(TipoTelefoneEnum.RESIDENCIAL,"6122334455");
         Telefone tel2 = new Telefone(TipoTelefoneEnum.CELULAR,"61998887766");
-        form.setTelefone(Arrays.asList(tel1,tel2));
+        update.setTelefone(Arrays.asList(tel1,tel2));
 
-        EnderecoForm endForm = new EnderecoForm("7088866","Rua abc casa 3","Vila Planalto","Brasília","DF");
+        EnderecoUpdate endUpdate = new EnderecoUpdate("7088866","Rua abc casa 3","Vila Planalto","Brasília","DF");
 
-        ClienteDTO editar = controller.editar(1L, form);
+        ResponseEntity<ClienteDTO> editar = controller.editar(1L, update);
 
         assertNotNull(editar);
         System.out.println(editar);

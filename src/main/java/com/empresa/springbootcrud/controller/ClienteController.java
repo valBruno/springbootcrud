@@ -3,6 +3,7 @@ package com.empresa.springbootcrud.controller;
 import com.empresa.springbootcrud.model.Cliente;
 import com.empresa.springbootcrud.model.dto.ClienteDTO;
 import com.empresa.springbootcrud.model.form.ClienteForm;
+import com.empresa.springbootcrud.model.update.ClienteUpdate;
 import com.empresa.springbootcrud.repository.ClienteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,13 +33,13 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public List<ClienteDTO> get() {
+    public ClienteDTO get(@PathVariable("id") Long id) {
 
-        List<Cliente> resultado = clienteRepo.listarCompleto();
+        Cliente resultado = clienteRepo.getOne(id);
 
-        List<ClienteDTO> collect = resultado.stream().map(Cliente::toClienteDTO).collect(Collectors.toList());
+        ClienteDTO retorno = resultado.toClienteDTO();
 
-        return collect;
+        return retorno;
     }
 
     @PostMapping
@@ -54,12 +54,15 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ClienteDTO editar(@PathVariable("id") Long clienteId, @RequestBody ClienteForm form) {
+    public ResponseEntity<ClienteDTO> editar(@PathVariable("id") Long clienteId, @RequestBody ClienteUpdate update) {
 
-        Cliente c = form.toCliente();
-        Optional<Cliente> byId = clienteRepo.findById(clienteId);
+        Cliente resultado = clienteRepo.getOne(clienteId);
+        resultado.atualizar(update);
+        Cliente atualizado = clienteRepo.save(resultado);
 
-        return null;
+        ClienteDTO retorno = atualizado.toClienteDTO();
+
+        return ResponseEntity.ok(retorno);
     }
 
     @DeleteMapping("/{id}")

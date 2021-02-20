@@ -2,6 +2,7 @@ package com.empresa.springbootcrud.model;
 
 import com.empresa.springbootcrud.model.dto.ClienteDTO;
 import com.empresa.springbootcrud.model.form.ClienteForm;
+import com.empresa.springbootcrud.model.update.ClienteUpdate;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -122,5 +123,13 @@ public class Cliente {
 
     public ClienteDTO toClienteDTO() {
         return new ClienteDTO(this);
+    }
+
+    public void atualizar(ClienteUpdate c) {
+        if(c.getNome()!=null) this.nome = c.getNome();
+        if(c.getCpf()!=null) this.cpf = c.getCpf();
+        if(c.getEndereco()!=null) this.endereco.atualizar(c.getEndereco());
+        if(c.getTelefone()!=null) this.telefone = new HashSet<Telefone>(c.getTelefone());
+        if(c.getEmail()!=null) this.email = new HashSet<>(c.getEmail());
     }
 }
