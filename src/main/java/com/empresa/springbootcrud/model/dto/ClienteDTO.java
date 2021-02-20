@@ -2,6 +2,7 @@ package com.empresa.springbootcrud.model.dto;
 
 import com.empresa.springbootcrud.model.Cliente;
 import com.empresa.springbootcrud.model.Endereco;
+import com.empresa.springbootcrud.model.Telefone;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -13,7 +14,7 @@ public class ClienteDTO {
     private String nome;
     private String cpf;
     private EnderecoDTO endereco;
-    private Set<String> telefone = new HashSet<>();
+    private Set<TelefoneDTO> telefone = new HashSet<>();
     private Set<String> email = new HashSet<>();
 
     public ClienteDTO() {
@@ -24,7 +25,7 @@ public class ClienteDTO {
         this.nome = c.getNome();
         this.cpf = c.getCpf();
         this.endereco = Optional.ofNullable(c).map(Cliente::getEndereco).map(Endereco::toEnderecoDTO).orElse(null);
-        this.telefone = c.getTelefone();
+        this.telefone = Optional.ofNullable(c).map(Cliente::getTelefone).map(TelefoneDTO::toSetTelefoneDTO).orElse(null);
         this.email = c.getEmail();
     }
 
@@ -60,11 +61,11 @@ public class ClienteDTO {
         this.endereco = endereco;
     }
 
-    public Set<String> getTelefone() {
+    public Set<TelefoneDTO> getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(Set<String> telefone) {
+    public void setTelefone(Set<TelefoneDTO> telefone) {
         this.telefone = telefone;
     }
 

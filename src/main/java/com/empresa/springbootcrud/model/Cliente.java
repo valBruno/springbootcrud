@@ -1,6 +1,7 @@
 package com.empresa.springbootcrud.model;
 
 import com.empresa.springbootcrud.model.dto.ClienteDTO;
+import com.empresa.springbootcrud.model.form.ClienteForm;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -48,8 +49,9 @@ public class Cliente {
      * o telefone deve ser mostrado com máscara;
      * o telefone deve ser persistido sem máscara.
      */
-    @ElementCollection
-    private Set<String> telefone = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cliente_id")
+    private Set<Telefone> telefone = new HashSet<>();
 
     /*
      * Podem ser cadastrados múltiplos e-mails;
@@ -58,6 +60,17 @@ public class Cliente {
      */
     @ElementCollection
     private Set<String> email = new HashSet<>();
+
+    public Cliente(ClienteForm cf) {
+        this.nome = cf.getNome();
+        this.cpf = cf.getCpf();
+        this.endereco = cf.getEndereco().toEndereco();
+        this.telefone = new HashSet<Telefone>(cf.getTelefone());
+        this.email = new HashSet<>(cf.getEmail());
+    }
+
+    public Cliente() {
+    }
 
     public Long getId() {
         return id;
@@ -91,11 +104,11 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public Set<String> getTelefone() {
+    public Set<Telefone> getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(Set<String> telefone) {
+    public void setTelefone(Set<Telefone> telefone) {
         this.telefone = telefone;
     }
 

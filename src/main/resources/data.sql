@@ -28,8 +28,8 @@ INSERT INTO Cliente_Email(cliente_id, email) values
 ,(3,'email3@email.com')
 ;
 
-INSERT INTO Cliente_Telefone(cliente_id, telefone) values
-(1,'1234567890')
-,(2,'1234567890')
-,(3,'1234567890')
+INSERT INTO Telefone(numero, tipo, cliente_id) values
+('1234567890','RESIDENCIAL',1)
+,('1234567890','COMERCIAL',2)
+,('1234567890','CELULAR',3)
 ;
