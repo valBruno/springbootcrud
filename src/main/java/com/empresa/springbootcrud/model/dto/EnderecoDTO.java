@@ -1,16 +1,8 @@
-package com.empresa.springbootcrud.model;
+package com.empresa.springbootcrud.model.dto;
 
-import com.empresa.springbootcrud.model.dto.ClienteDTO;
-import com.empresa.springbootcrud.model.dto.EnderecoDTO;
+import com.empresa.springbootcrud.model.Endereco;
 
-import javax.persistence.*;
-
-@Entity
-public class Endereco {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class EnderecoDTO {
 
     private String cep;
     private String logradouro;
@@ -18,12 +10,15 @@ public class Endereco {
     private String cidade;
     private String uf;
 
-    public Long getId() {
-        return id;
+    public EnderecoDTO() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public EnderecoDTO(Endereco e) {
+        this.cep = e.getCep();
+        this.logradouro = e.getLogradouro();
+        this.bairro = e.getBairro();
+        this.cidade = e.getCidade();
+        this.uf = e.getUf();
     }
 
     public String getCep() {
@@ -66,16 +61,10 @@ public class Endereco {
         this.uf = uf;
     }
 
-    public EnderecoDTO toEnderecoDTO() {
-        return new EnderecoDTO(this);
-    }
-
-
     @Override
     public String toString() {
-        return "Endereco{" +
-                "id=" + id +
-                ", cep='" + cep + '\'' +
+        return "{" +
+                "  cep='" + cep + '\'' +
                 ", logradouro='" + logradouro + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cidade='" + cidade + '\'' +

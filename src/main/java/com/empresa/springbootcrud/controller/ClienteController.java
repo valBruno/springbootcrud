@@ -19,7 +19,7 @@ public class ClienteController {
     @RequestMapping("/clientes")
     public List<ClienteDTO> listar() {
 
-        List<Cliente> resultado = clienteRepo.findAll();
+        List<Cliente> resultado = clienteRepo.listarCompleto();
 
         List<ClienteDTO> collect = resultado.stream().map(Cliente::toClienteDTO).collect(Collectors.toList());
 

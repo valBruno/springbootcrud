@@ -3,7 +3,8 @@ package com.empresa.springbootcrud.model;
 import com.empresa.springbootcrud.model.dto.ClienteDTO;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Cliente {
@@ -48,7 +49,7 @@ public class Cliente {
      * o telefone deve ser persistido sem máscara.
      */
     @ElementCollection
-    private List<String> telefone;
+    private Set<String> telefone = new HashSet<>();
 
     /*
      * Podem ser cadastrados múltiplos e-mails;
@@ -56,7 +57,7 @@ public class Cliente {
      * Deve ser um e-mail válido.
      */
     @ElementCollection
-    private List<String> email;
+    private Set<String> email = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -90,19 +91,19 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public List<String> getTelefone() {
+    public Set<String> getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(List<String> telefone) {
+    public void setTelefone(Set<String> telefone) {
         this.telefone = telefone;
     }
 
-    public List<String> getEmail() {
+    public Set<String> getEmail() {
         return email;
     }
 
-    public void setEmail(List<String> email) {
+    public void setEmail(Set<String> email) {
         this.email = email;
     }
 

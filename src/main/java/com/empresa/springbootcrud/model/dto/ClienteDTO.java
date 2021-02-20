@@ -3,16 +3,18 @@ package com.empresa.springbootcrud.model.dto;
 import com.empresa.springbootcrud.model.Cliente;
 import com.empresa.springbootcrud.model.Endereco;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 public class ClienteDTO {
 
     private Long id;
     private String nome;
     private String cpf;
-    private Endereco endereco;
-    private List<String> telefone;
-    private List<String> email;
+    private EnderecoDTO endereco;
+    private Set<String> telefone = new HashSet<>();
+    private Set<String> email = new HashSet<>();
 
     public ClienteDTO() {
     }
@@ -21,7 +23,7 @@ public class ClienteDTO {
         this.id = c.getId();
         this.nome = c.getNome();
         this.cpf = c.getCpf();
-        this.endereco = c.getEndereco();
+        this.endereco = Optional.ofNullable(c).map(Cliente::getEndereco).map(Endereco::toEnderecoDTO).orElse(null);
         this.telefone = c.getTelefone();
         this.email = c.getEmail();
     }
@@ -50,27 +52,39 @@ public class ClienteDTO {
         this.cpf = cpf;
     }
 
-    public Endereco getEndereco() {
+    public EnderecoDTO getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(EnderecoDTO endereco) {
         this.endereco = endereco;
     }
 
-    public List<String> getTelefone() {
+    public Set<String> getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(List<String> telefone) {
+    public void setTelefone(Set<String> telefone) {
         this.telefone = telefone;
     }
 
-    public List<String> getEmail() {
+    public Set<String> getEmail() {
         return email;
     }
 
-    public void setEmail(List<String> email) {
+    public void setEmail(Set<String> email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "ClienteDTO{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", endereco=" + endereco +
+                ", telefone=" + telefone +
+                ", email=" + email +
+                '}';
     }
 }
