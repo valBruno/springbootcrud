@@ -1,8 +1,8 @@
 INSERT INTO Perfil(nome) VALUES ('Administrador'), ('Usuario');
 
 INSERT INTO Usuario(login, senha) VALUES
-('admin', '123456')
-,('comum', '123456')
+('admin', '$2a$10$9d5ZznmdaoH./5AYw5E/YuaQGAMRsfrCCQeIeI8479pgk0FbL8cUK')
+,('comum', '$2a$10$9d5ZznmdaoH./5AYw5E/YuaQGAMRsfrCCQeIeI8479pgk0FbL8cUK')
 ;
 
 -- INSERT INTO Usuario_Perfis(fk_usuario, fk_perfil) VALUES
