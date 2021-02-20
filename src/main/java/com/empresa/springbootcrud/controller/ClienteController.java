@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -43,6 +44,7 @@ public class ClienteController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<ClienteDTO> cadastrar(@Valid @RequestBody ClienteForm form, UriComponentsBuilder uriBuilder) {
 
         Cliente c = form.toCliente();
@@ -54,6 +56,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<ClienteDTO> editar(@PathVariable("id") Long clienteId, @RequestBody ClienteUpdate update) {
 
         Cliente resultado = clienteRepo.getOne(clienteId);
@@ -66,7 +69,9 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ClienteDTO apagar(@PathVariable("id") Long clienteId) {
-        return null;
+    @Transactional
+    public ResponseEntity apagar(@PathVariable("id") Long clienteId) {
+        clienteRepo.deleteById(clienteId);
+        return ResponseEntity.ok().build();
     }
 }
