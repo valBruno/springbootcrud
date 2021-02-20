@@ -2,6 +2,7 @@ package com.empresa.springbootcrud.model;
 
 import com.empresa.springbootcrud.model.dto.ClienteDTO;
 import com.empresa.springbootcrud.model.dto.EnderecoDTO;
+import com.empresa.springbootcrud.model.form.EnderecoForm;
 
 import javax.persistence.*;
 
@@ -17,6 +18,17 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String uf;
+
+    public Endereco() {
+    }
+
+    public Endereco(EnderecoForm ef) {
+        this.cep = ef.getCep();
+        this.logradouro = ef.getLogradouro();
+        this.bairro = ef.getBairro();
+        this.cidade = ef.getCidade();
+        this.uf = ef.getUf();
+    }
 
     public Long getId() {
         return id;
