@@ -14,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @Configuration
@@ -43,15 +46,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //Configuracoes de autorizacao
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors()
+                .and().authorizeRequests()
 //                .antMatchers(HttpMethod.GET, "/clientes").permitAll()
 //                .antMatchers(HttpMethod.GET, "/clientes/*").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .headers().frameOptions().disable().and() //h2
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .headers().frameOptions().disable()//H2
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepo), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -60,6 +64,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
 //        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
     }
 
 }

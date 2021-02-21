@@ -1,5 +1,6 @@
 package com.empresa.springbootcrud.model;
 
+import com.empresa.springbootcrud.model.dto.UsuarioDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -87,5 +88,9 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UsuarioDTO toUsuarioDTO() {
+        return new UsuarioDTO(this);
     }
 }
